@@ -1,0 +1,47 @@
+{
+  "name": "@ldflex/async-iteration-handlers",
+  "version": "0.0.0-development",
+  "description": "LDflex handlers for asynchronous iteration operations",
+  "license": "MIT",
+  "author": "Jesse Wright <jesse.wright@anu.edu.au> (https://github.com/jeswr/)",
+  "contributors": [
+    "Ruben Verborgh <ruben@verborgh.org> (https://ruben.verborgh.org/)",
+    "Ruben Taelman <ruben.taelman@ugent.be> (https://www.rubensworks.net/)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LDflex/LDflex"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.js",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "devDependencies": {
+    "@types/async": "^3.2.5",
+    "@types/jest": "^26.0.20",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.1",
+    "husky": "^4.2.3",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.1",
+    "typescript-eslint": "^0.0.1-alpha.0"
+  },
+  "scripts": {
+    "build": "npm run build:lib && npm run build:module",
+    "build:lib": "babel src --out-dir lib",
+    "build:module": "babel src --env-name module --out-dir module",
+    "jest": "jest",
+    "lint": "eslint src test --ext .ts",
+    "lint:fix": "eslint src test --ext .ts --fix",
+    "prepublishOnly": "npm run build",
+    "test": "npm run lint && npm run jest -- --collectCoverage",
+    "test:dev": "npm run jest -- --watch"
+  },
+  "dependencies": {
+    "async": "^3.2.0"
+  }
+}
