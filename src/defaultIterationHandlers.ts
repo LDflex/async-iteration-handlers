@@ -10,8 +10,8 @@ export const filterLimit = new IterableMethods.filterLimit();
 export const filterSeries = new IterableMethods.filterSeries();
 
 export const find = new IterableMethods.find();
-export const findLimit = new IterableMethods.filterLimit();
-export const findSeries = new IterableMethods.filterSeries();
+export const findLimit = new IterableMethods.findLimit();
+export const findSeries = new IterableMethods.findSeries();
 
 export const forEach = new IterableMethods.forEach();
 export const forEachLimit = new IterableMethods.forEachLimit();

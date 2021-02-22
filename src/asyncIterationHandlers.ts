@@ -10,9 +10,9 @@ export const forEach = iterableMethodsFactory(async.each);
 export const forEachLimit = iterableLimitMethodsFactory(async.eachLimit);
 export const forEachSeries = iterableMethodsFactory(async.eachSeries);
 
-// export const forEachOf = IterableMethodsFactory(async.eachOf);
-export const forEachOfLimit = iterableLimitMethodsFactory(async.eachOfLimit);
-// export const forEachOfSeries = IterableMethodsFactory(async.eachOfSeries);
+// export const forEachOf = iterableMethodsFactory(async.eachOf);
+// export const forEachOfLimit = iterableLimitMethodsFactory(async.eachOfLimit);
+// export const forEachOfSeries = iterableMethodsFactory(async.eachOfSeries);
 
 export const every = iterableMethodsFactory(async.every);
 export const everyLimit = iterableLimitMethodsFactory(async.everyLimit);
@@ -26,8 +26,8 @@ export const map = iterableMethodsFactory(async.map);
 export const mapLimit = iterableLimitMethodsFactory(async.mapLimit);
 export const mapSeries = iterableMethodsFactory(async.mapSeries);
 
-// export const reduce = IterableMethodsFactory(async.reduce);
-// export const reduceRight = IterableMethodsFactory(async.reduceRight);
+// export const reduce = iterableMethodsFactory(async.reduce);
+// export const reduceRight = iterableMethodsFactory(async.reduceRight);
 
 export const reject = iterableMethodsFactory(async.reject);
 export const rejectLimit = iterableLimitMethodsFactory(async.rejectLimit);
@@ -36,5 +36,6 @@ export const rejectSeries = iterableMethodsFactory(async.rejectSeries);
 export const some = iterableMethodsFactory(async.some);
 export const someLimit = iterableLimitMethodsFactory(async.someLimit);
 export const someSeries = iterableMethodsFactory(async.someSeries);
+
 // May be some issues because of the 2nd arg accumulartor
 export const transform = iterableMethodsFactory(async.transform);
