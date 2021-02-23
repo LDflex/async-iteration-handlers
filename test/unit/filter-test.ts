@@ -1,6 +1,5 @@
 /* eslint eqeqeq: off, no-loop-func: off */
 import * as IterableMethods from '../../src/defaultIterationHandlers';
-import * as async from 'async';
 import { asyncIteratorOf, getEmptyClass } from '../util';
 
 describe('.filter handlers', () => {

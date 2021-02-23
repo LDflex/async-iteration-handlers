@@ -1,5 +1,5 @@
 import * as async from 'async';
-import { iterableMethodsFactory, iterableLimitMethodsFactory } from './iterableMethodsFactory';
+import { iterableMethodsFactory, iterableLimitMethodsFactory, iterableMemoMethodsFactory, iterableEachOfMethodsFactory, iterableEachOfLimitMethodsFactory } from './iterableMethodsFactory';
 
 export const find = iterableMethodsFactory(async.detect);
 export const findLimit = iterableLimitMethodsFactory(async.detectLimit);
@@ -10,9 +10,9 @@ export const forEach = iterableMethodsFactory(async.each);
 export const forEachLimit = iterableLimitMethodsFactory(async.eachLimit);
 export const forEachSeries = iterableMethodsFactory(async.eachSeries);
 
-// export const forEachOf = iterableMethodsFactory(async.eachOf);
-// export const forEachOfLimit = iterableLimitMethodsFactory(async.eachOfLimit);
-// export const forEachOfSeries = iterableMethodsFactory(async.eachOfSeries);
+export const forEachOf = iterableEachOfMethodsFactory(async.eachOf);
+export const forEachOfLimit = iterableEachOfLimitMethodsFactory(async.eachOfLimit);
+export const forEachOfSeries = iterableEachOfMethodsFactory(async.eachOfSeries);
 
 export const every = iterableMethodsFactory(async.every);
 export const everyLimit = iterableLimitMethodsFactory(async.everyLimit);
@@ -26,8 +26,8 @@ export const map = iterableMethodsFactory(async.map);
 export const mapLimit = iterableLimitMethodsFactory(async.mapLimit);
 export const mapSeries = iterableMethodsFactory(async.mapSeries);
 
-// export const reduce = iterableMethodsFactory(async.reduce);
-// export const reduceRight = iterableMethodsFactory(async.reduceRight);
+export const reduce = iterableMemoMethodsFactory(async.reduce);
+export const reduceRight = iterableMemoMethodsFactory(async.reduceRight);
 
 export const reject = iterableMethodsFactory(async.reject);
 export const rejectLimit = iterableLimitMethodsFactory(async.rejectLimit);
