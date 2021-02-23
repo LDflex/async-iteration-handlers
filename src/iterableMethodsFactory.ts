@@ -18,15 +18,15 @@ export function iterableMethodsFactory<T, E = Error>(
         asyncFunction(
           path,
           memo ?? (async (item, callback: async.AsyncResultCallback<Error>) => {
-            const result = await parameterFunction(item);
+            const result = await parameterFunction(await Promise.resolve(item));
             callback(null, result);
           }),
-          (err, res) => {
+          async (err, res) => {
             if (err)
               reject(err);
 
             else
-              resolve(res);
+              resolve(Array.isArray(res) ? await Promise.all(res) : res);
           },
         );
       });
@@ -49,34 +49,23 @@ export function iterableLimitMethodsFactory<T, E = Error>(
   ) => void) {
   return class {
     handle(pathData: any, path: any) {
-      return (parameterFunction: Function, limit: number, memo?: any) => new Promise((resolve, reject) => {
+      return (parameterFunction: Function, limit: number = 5, memo?: any) => new Promise((resolve, reject) => {
         asyncFunction(
           path,
           limit,
-          memo ?? (async (item, callback: async.AsyncResultCallback<Error>) => {
-            const result = await parameterFunction(item);
-            callback(null, result);
+          memo ?? (async (item, callback: async.AsyncResultCallback<T, E>) => {
+            const result = await parameterFunction(await Promise.resolve(item));
+            callback(undefined, result);
           }),
-          (err, res) => {
+          async (err, res) => {
             if (err)
               reject(err);
 
             else
-              resolve(res);
+              resolve(Array.isArray(res) ? await Promise.all(res) : res);
           },
         );
       });
     }
   };
 }
-
-
-// export function iterableLimitMethodsFactory<T, E = Error>(asyncFunction: Function) {
-//   return class {
-//     handle(pathData: any, path: any) {
-//       return (parameterFunction: Function, limit: number = 5) => asyncFunction(
-//         path, limit, (item: T) => parameterFunction(item),
-//       );
-//     }
-//   };
-// }
