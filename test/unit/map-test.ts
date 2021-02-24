@@ -72,6 +72,13 @@ describe('.map handlers', () => {
           const found = arg === undefined ? await map(() => true) : await map(() => true, arg);
           expect(found).toEqual([]);
         });
+
+        it('Should throw error on rejecting elements', () => {
+          const map = handler.handle(null, [
+            Promise.reject(Error('Reject: FOO')),
+          ]);
+          expect(() => map(() => true)).rejects.toThrow(Error('Reject: FOO'));
+        });
       });
     }
   }

@@ -2,23 +2,25 @@
 import * as IterableMethods from '../../src/defaultIterationHandlers';
 import { asyncIteratorOf, getEmptyClass } from '../util';
 
-describe('.forEach handlers', () => {
+describe('.forEachOf handlers', () => {
   let handler: { handle: Function };
   let handle: Function;
-  const filledArrays: (() => (number[] | AsyncGenerator<number, void, unknown>))[] =
+  const filledArrays: (() => ({key: number}[] | AsyncGenerator<{key: number}, void, unknown>))[] =
   [
-    () => [1, 2, 3],
-    () => asyncIteratorOf([1, 2, 3]),
+    () => [{ key: 1 }, { key: 2 }, { key: 3 }],
+    // () => asyncIteratorOf([{ key: 1 }, { key: 2 }, { key: 3 }]),
   ];
-  const mixedArrays: (() => ((string | Promise<string>)[] | AsyncGenerator<string | Promise<string>, void, unknown>))[][] =
+  const mixedArrays: (() => (({key: string | Promise<string> } | Promise<{key: string | Promise<string> }>)[] | AsyncGenerator<{key: string} | Promise<{key: string}>, void, unknown>))[][] =
   [
-    [() => ['a', Promise.resolve('b'), 'c']],
-    [() => asyncIteratorOf(['a', Promise.resolve('b'), 'c'])],
+    [() => [{ key: 'a' }, { key: 'b' }, { key: 'c' }]],
+    // [() => [{ key: 'a' }, Promise.resolve({ key: 'b' }), { key: 'c' }]],
+    // [() => [{ key: 'a' }, { key: Promise.resolve('b') }, { key: 'c' }]],
+    // [() => asyncIteratorOf([{ key: 'a' }, Promise.resolve({ key: 'b' }), { key: 'c' }])],
   ];
   const matrix: ([string, { handle: Function }] | [string, { handle: Function }, (number | undefined)[]])[] = [
-    ['async', IterableMethods.forEach],
-    ['series', IterableMethods.forEachSeries],
-    ['limit', IterableMethods.forEachLimit, [undefined, 1, 2, 3, 4, 5, 10, 20, 100]],
+    ['async', IterableMethods.forEachOf],
+    // ['series', IterableMethods.forEachOfSeries],
+    // ['limit', IterableMethods.forEachOfLimit, [undefined, 1, 2, 3, 4, 5, 10, 20, 100]],
   ];
 
   for (const [name, _handler, args = [undefined]] of matrix) {
@@ -34,8 +36,8 @@ describe('.forEach handlers', () => {
           const each = handle(null, filledArray());
           let val = 0;
           const found = arg === undefined ?
-            await each((x: number) => { val += x; }) :
-            await each((x: number) => { val += x; }, arg);
+            await each((v: Record<string, number>, key: string) => { val += v[key]; }) :
+            await each((v: Record<string, number>, key: string) => { val += v[key]; }, arg);
           expect(val).toEqual(6);
         });
 
@@ -43,8 +45,8 @@ describe('.forEach handlers', () => {
           const map = handle(null, mixedArray());
           let str = '';
           const found = arg === undefined ?
-            await map((x: string) => { str += x; }) :
-            await map((x: string) => { str += x; }, arg);
+            await map((x: string) => { str += x; }, 'key') :
+            await map((x: string) => { str += x; }, 'key', arg);
           expect(str).toEqual('abc');
         });
 
@@ -53,8 +55,8 @@ describe('.forEach handlers', () => {
           let called = false;
           // TODO: Make test stricter
           const found = arg === undefined ?
-            await each(() => { called = true; }) :
-            await each(() => { called = true; }, arg);
+            await each(() => { called = true; }, 'key') :
+            await each(() => { called = true; }, 'key', arg);
           expect(called).toEqual(false);
         });
 
@@ -62,7 +64,7 @@ describe('.forEach handlers', () => {
           const each = handler.handle(null, [
             Promise.reject(Error('Reject: FOO')),
           ]);
-          expect(() => each(() => true)).rejects.toThrow(Error('Reject: FOO'));
+          expect(() => each(() => true, 'key')).rejects.toThrow(Error('Reject: FOO'));
         });
       });
     }

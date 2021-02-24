@@ -17,6 +17,10 @@ export const forEach = new IterableMethods.forEach();
 export const forEachLimit = new IterableMethods.forEachLimit();
 export const forEachSeries = new IterableMethods.forEachSeries();
 
+export const forEachOf = new IterableMethods.forEachOf();
+export const forEachOfLimit = new IterableMethods.forEachOfLimit();
+export const forEachOfSeries = new IterableMethods.forEachOfSeries();
+
 export const map = new IterableMethods.map();
 export const mapLimit = new IterableMethods.mapLimit();
 export const mapSeries = new IterableMethods.mapSeries();

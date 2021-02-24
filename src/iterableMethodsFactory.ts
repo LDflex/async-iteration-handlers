@@ -62,7 +62,9 @@ export function iterableEachOfMethodsFactory<T, E = Error>(
           path,
           (async (item, key, callback: async.AsyncResultCallback<T, E>) => {
             try {
-              await parameterFunction(await Promise.resolve(item), key);
+              const result = await parameterFunction(await Promise.resolve(item), key);
+              // eslint-disable-next-line callback-return
+              callback(null, result);
             }
             catch (e) {
               // eslint-disable-next-line callback-return
@@ -143,8 +145,15 @@ export function iterableLimitMethodsFactory<T, K, E = Error>(
           path,
           limit,
           (async (item, callback: async.AsyncResultCallback<T, E>) => {
-            const result = await parameterFunction(await Promise.resolve(item));
-            callback(undefined, result);
+            try {
+              const result = await parameterFunction(await Promise.resolve(item));
+              // eslint-disable-next-line callback-return
+              callback(undefined, result);
+            }
+            catch (e) {
+              // eslint-disable-next-line callback-return
+              callback(e);
+            }
           }),
           async (err, res) => {
             if (err)
@@ -180,8 +189,15 @@ export function iterableMemoMethodsFactory<T, K, E = Error>(
           path,
           memo,
           (async (_memo: K | undefined, item: T, callback: async.AsyncResultCallback<K, E>) => {
-            const result: K = await parameterFunction(_memo, await Promise.resolve(item));
-            callback(undefined, result);
+            try {
+              const result: K = await parameterFunction(_memo, await Promise.resolve(item));
+              // eslint-disable-next-line callback-return
+              callback(undefined, result);
+            }
+            catch (e) {
+              // eslint-disable-next-line callback-return
+              callback(e);
+            }
           }),
           async (err, res) => {
             if (err)

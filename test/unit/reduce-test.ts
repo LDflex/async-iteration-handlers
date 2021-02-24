@@ -40,6 +40,13 @@ describe('.reduce handlers', () => {
     expect(await reducer((t: any, x: any) => x, 'a')).toEqual('a');
     expect(await reducer((t: any, x: any) => x, [])).toEqual([]);
   });
+
+  it('Should throw error on rejecting elements', () => {
+    const reducer = handler.handle(null, [
+      Promise.reject(Error('Reject: FOO')),
+    ]);
+    expect(() => reducer(() => true)).rejects.toThrow(Error('Reject: FOO'));
+  });
 });
 
 // describe('.reduceRight handlers', () => {

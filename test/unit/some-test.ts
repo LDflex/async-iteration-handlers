@@ -2,7 +2,7 @@
 import * as IterableMethods from '../../src/defaultIterationHandlers';
 import { asyncIteratorOf, getEmptyClass } from '../util';
 
-describe('.find handlers', () => {
+describe('.some handlers', () => {
   let handler: { handle: Function };
   let handle: Function;
   const filledArrays: (() => (number[] | AsyncGenerator<number, void, unknown>))[] =
@@ -71,6 +71,13 @@ describe('.find handlers', () => {
           // TODO: Make test stricter
           const found = arg === undefined ? await find(() => true) : await find(() => true, arg);
           expect(found).toBeFalsy();
+        });
+
+        it('Should throw error on rejecting elements', () => {
+          const some = handler.handle(null, [
+            Promise.reject(Error('Reject: FOO')),
+          ]);
+          expect(() => some(() => true)).rejects.toThrow(Error('Reject: FOO'));
         });
       });
     }

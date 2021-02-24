@@ -1,5 +1,11 @@
 import * as async from 'async';
-import { iterableMethodsFactory, iterableLimitMethodsFactory, iterableMemoMethodsFactory, iterableEachOfMethodsFactory, iterableEachOfLimitMethodsFactory } from './iterableMethodsFactory';
+import {
+  iterableMethodsFactory,
+  iterableLimitMethodsFactory,
+  iterableMemoMethodsFactory,
+  iterableEachOfMethodsFactory,
+  iterableEachOfLimitMethodsFactory,
+} from './iterableMethodsFactory';
 
 export const find = iterableMethodsFactory(async.detect);
 export const findLimit = iterableLimitMethodsFactory(async.detectLimit);
