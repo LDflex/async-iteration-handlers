@@ -1,10 +1,18 @@
 module.exports = {
-  preset: "ts-jest",
+  preset: 'ts-jest',
   clearMocks: true,
   collectCoverageFrom: [
-    "<rootDir>/src/**/*.ts",
+    '<rootDir>/src/**/*.ts',
   ],
   testMatch: [
-    "<rootDir>/test/**/*-test.ts",
+    '<rootDir>/test/**/*-test.ts',
   ],
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 100,
+  //     functions: 100,
+  //     lines: 100,
+  //     statements: 100,
+  //   },
+  // },
 };

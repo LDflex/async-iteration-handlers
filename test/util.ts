@@ -35,11 +35,11 @@ export async function* asyncIteratorOf<T>(items: T[]) {
     yield item;
 }
 
-export function getEmptyClass() {
+export function getEmptyClass(includeAsyncIterator = true) {
   return [
     null,
     {},
     [],
-    asyncIteratorOf([]),
+    ...(includeAsyncIterator ? [asyncIteratorOf([])] : []),
   ];
 }

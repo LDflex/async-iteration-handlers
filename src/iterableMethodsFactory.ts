@@ -1,5 +1,7 @@
 import * as async from 'async';
 
+// TODO: FIX JSDOC
+
 /**
  * A factory that turns functions (both fully concurrent and fully in series)
  * from the async library into methods/handlers
@@ -18,8 +20,15 @@ export function iterableMethodsFactory<T, E = Error>(
         asyncFunction(
           path,
           (async (item, callback: async.AsyncResultCallback<T, E>) => {
-            const result = await parameterFunction(await Promise.resolve(item));
-            callback(null, result);
+            try {
+              const result = await parameterFunction(await Promise.resolve(item));
+              // eslint-disable-next-line callback-return
+              callback(null, result);
+            }
+            catch (e) {
+              // eslint-disable-next-line callback-return
+              callback(e);
+            }
           }),
           async (err, res) => {
             if (err)

@@ -21,8 +21,11 @@ export const map = new IterableMethods.map();
 export const mapLimit = new IterableMethods.mapLimit();
 export const mapSeries = new IterableMethods.mapSeries();
 
-// reduce: new IterableMethods.reduce(),
-// reduceRight: new IterableMethods.reduceRight(),
+export const reduce = new IterableMethods.reduce();
+// Note: Currently disabled due to poor handling of async iterators
+// see commented out tests around this
+
+// export const reduceRight = new IterableMethods.reduceRight();
 
 export const reject = new IterableMethods.reject();
 export const rejectLimit = new IterableMethods.rejectLimit();

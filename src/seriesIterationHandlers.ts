@@ -7,8 +7,8 @@ export const find = new IterableMethods.findSeries();
 export const forEach = new IterableMethods.forEachSeries();
 export const map = new IterableMethods.mapSeries();
 
-// reduce: new IterableMethods.reduce(),
-// reduceRight: new IterableMethods.reduceRight(),
+export const reduce = new IterableMethods.reduce();
+// export const reduceRight = new IterableMethods.reduceRight();
 
 export const reject = new IterableMethods.rejectSeries();
 export const some = new IterableMethods.someSeries();
