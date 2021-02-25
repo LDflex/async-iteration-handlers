@@ -39,4 +39,4 @@ export const some = new IterableMethods.some();
 export const someLimit = new IterableMethods.someLimit();
 export const someSeries = new IterableMethods.someSeries();
 
-export const transform = new IterableMethods.transform();
+// export const transform = new IterableMethods.transform();

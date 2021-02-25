@@ -77,7 +77,7 @@ describe('.some handlers', () => {
           const some = handler.handle(null, [
             Promise.reject(Error('Reject: FOO')),
           ]);
-          expect(() => some(() => true)).rejects.toThrow(Error('Reject: FOO'));
+          expect(() => some(() => true)).rejects.toThrowError(Error('Reject: FOO'));
         });
       });
     }

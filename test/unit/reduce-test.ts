@@ -45,7 +45,7 @@ describe('.reduce handlers', () => {
     const reducer = handler.handle(null, [
       Promise.reject(Error('Reject: FOO')),
     ]);
-    expect(() => reducer(() => true)).rejects.toThrow(Error('Reject: FOO'));
+    expect(() => reducer(() => true)).rejects.toThrowError(Error('Reject: FOO'));
   });
 });
 

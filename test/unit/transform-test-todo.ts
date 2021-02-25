@@ -2,7 +2,7 @@
 import * as IterableMethods from '../../src/defaultIterationHandlers';
 import { asyncIteratorOf, getEmptyClass } from '../util';
 
-describe('.map handlers', () => {
+describe('.transform handlers', () => {
   let handler: { handle: Function };
   let handle: Function;
   const filledArrays: (() => (number[] | AsyncGenerator<number, void, unknown>))[] =
@@ -16,9 +16,7 @@ describe('.map handlers', () => {
     [() => asyncIteratorOf(['a', Promise.resolve('b'), 'c'])],
   ];
   const matrix: ([string, { handle: Function }] | [string, { handle: Function }, (number | undefined)[]])[] = [
-    ['async', IterableMethods.map],
-    ['series', IterableMethods.mapSeries],
-    ['limit', IterableMethods.mapLimit, [undefined, 1, 2, 3, 4, 5, 10, 20, 100]],
+    // ['async', IterableMethods.transform],
   ];
 
   for (const [name, _handler, args = [undefined]] of matrix) {

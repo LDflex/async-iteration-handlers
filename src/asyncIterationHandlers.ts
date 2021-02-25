@@ -11,7 +11,6 @@ export const find = iterableMethodsFactory(async.detect);
 export const findLimit = iterableLimitMethodsFactory(async.detectLimit);
 export const findSeries = iterableMethodsFactory(async.detectSeries);
 
-// TODO: ADD TESTS FOR BELOW FUNCTIONS
 export const forEach = iterableMethodsFactory(async.each);
 export const forEachLimit = iterableLimitMethodsFactory(async.eachLimit);
 export const forEachSeries = iterableMethodsFactory(async.eachSeries);
@@ -44,4 +43,4 @@ export const someLimit = iterableLimitMethodsFactory(async.someLimit);
 export const someSeries = iterableMethodsFactory(async.someSeries);
 
 // May be some issues because of the 2nd arg accumulartor
-export const transform = iterableMethodsFactory(async.transform);
+// export const transform = iterableMethodsFactory(async.transform);

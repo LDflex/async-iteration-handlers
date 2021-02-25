@@ -83,7 +83,7 @@ describe('.filter handlers', () => {
           const filter = handler.handle(null, [
             Promise.reject(Error('Reject: FOO')),
           ]);
-          expect(() => filter(() => true)).rejects.toThrow(Error('Reject: FOO'));
+          expect(() => filter(() => true)).rejects.toThrowError(Error('Reject: FOO'));
         });
       });
     }

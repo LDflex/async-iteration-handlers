@@ -76,7 +76,7 @@ export function iterableEachOfMethodsFactory<T, E = Error>(
               reject(err);
 
             else
-              resolve(Array.isArray(res) ? await Promise.all(res) : res);
+              resolve(res);
           },
         );
       });
@@ -99,13 +99,16 @@ export function iterableEachOfLimitMethodsFactory<T, E = Error>(
   ) => void) {
   return class {
     handle(pathData: any, path: any) {
-      return (parameterFunction: Function, limit: number) => new Promise((resolve, reject) => {
+      return (parameterFunction: Function, limit: number = 5) => new Promise((resolve, reject) => {
         asyncFunction(
           path,
           limit,
           (async (item, key, callback: async.AsyncResultCallback<T, E>) => {
             try {
-              await parameterFunction(await Promise.resolve(item), key);
+              const resolvedItem = await item;
+              const result = await parameterFunction(resolvedItem, key);
+              // eslint-disable-next-line callback-return
+              callback(null, result);
             }
             catch (e) {
               // eslint-disable-next-line callback-return
@@ -117,7 +120,7 @@ export function iterableEachOfLimitMethodsFactory<T, E = Error>(
               reject(err);
 
             else
-              resolve(Array.isArray(res) ? await Promise.all(res) : res);
+              resolve(res);
           },
         );
       });
@@ -146,7 +149,8 @@ export function iterableLimitMethodsFactory<T, K, E = Error>(
           limit,
           (async (item, callback: async.AsyncResultCallback<T, E>) => {
             try {
-              const result = await parameterFunction(await Promise.resolve(item));
+              const resolvedItem = await item;
+              const result = await parameterFunction(resolvedItem);
               // eslint-disable-next-line callback-return
               callback(undefined, result);
             }

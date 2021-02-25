@@ -74,7 +74,7 @@ describe('.find handlers', () => {
         const find = handler.handle(null, [
           Promise.reject(Error('Reject: FOO')),
         ]);
-        expect(() => find(() => true)).rejects.toThrow(Error('Reject: FOO'));
+        expect(() => find(() => true)).rejects.toThrowError(Error('Reject: FOO'));
       });
     }
   }
