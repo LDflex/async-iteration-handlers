@@ -31,9 +31,9 @@ export const reduce = new IterableMethods.reduce();
 
 // export const reduceRight = new IterableMethods.reduceRight();
 
-export const reject = new IterableMethods.reject();
-export const rejectLimit = new IterableMethods.rejectLimit();
-export const rejectSeries = new IterableMethods.rejectSeries();
+// export const reject = new IterableMethods.reject();
+// export const rejectLimit = new IterableMethods.rejectLimit();
+// export const rejectSeries = new IterableMethods.rejectSeries();
 
 export const some = new IterableMethods.some();
 export const someLimit = new IterableMethods.someLimit();

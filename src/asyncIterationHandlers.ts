@@ -34,13 +34,13 @@ export const mapSeries = iterableMethodsFactory(async.mapSeries);
 export const reduce = iterableMemoMethodsFactory(async.reduce);
 export const reduceRight = iterableMemoMethodsFactory(async.reduceRight);
 
-export const reject = iterableMethodsFactory(async.reject);
-export const rejectLimit = iterableLimitMethodsFactory(async.rejectLimit);
-export const rejectSeries = iterableMethodsFactory(async.rejectSeries);
+// export const reject = iterableMethodsFactory(async.reject);
+// export const rejectLimit = iterableLimitMethodsFactory(async.rejectLimit);
+// export const rejectSeries = iterableMethodsFactory(async.rejectSeries);
 
 export const some = iterableMethodsFactory(async.some);
 export const someLimit = iterableLimitMethodsFactory(async.someLimit);
 export const someSeries = iterableMethodsFactory(async.someSeries);
 
 // May be some issues because of the 2nd arg accumulartor
-// export const transform = iterableMethodsFactory(async.transform);
+// export const transform = iterableMemoMethodsFactory(async.transform);
