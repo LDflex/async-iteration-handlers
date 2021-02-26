@@ -5,6 +5,7 @@ import {
   iterableMemoMethodsFactory,
   iterableEachOfMethodsFactory,
   iterableEachOfLimitMethodsFactory,
+  iterableTransformMethodsFactory,
 } from './iterableMethodsFactory';
 
 export const find = iterableMethodsFactory(async.detect);
@@ -43,4 +44,4 @@ export const someLimit = iterableLimitMethodsFactory(async.someLimit);
 export const someSeries = iterableMethodsFactory(async.someSeries);
 
 // May be some issues because of the 2nd arg accumulartor
-// export const transform = iterableMemoMethodsFactory(async.transform);
+export const transform = iterableTransformMethodsFactory(async.transform);

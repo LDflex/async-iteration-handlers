@@ -216,3 +216,45 @@ export function iterableMemoMethodsFactory<T, K, E = Error>(
   };
 }
 
+/**
+ * A factory that turns functions with a limited concurrency
+ * from the async library into methods/handlers
+ * for LDflex
+ * @param asyncFunction The function to turn into a method/handler for LDflex
+ */
+export function iterableTransformMethodsFactory<T, K, E = Error>(
+  asyncFunction: (
+    arr: T[],
+    iteratee: (acc: K[], item: T, key: number, callback: (error?: E | undefined) => void) => void,
+    callback?: async.AsyncResultArrayCallback<T, E> | undefined
+  ) => void) {
+  return class {
+    handle(pathData: any, path: any) {
+      return (iteratee: (acc: K[], item: T, key: number, callback: (error?: E | undefined) => void) => void) => new Promise((resolve, reject) => {
+        asyncFunction(
+          path,
+          memo,
+          (async (_memo: K | undefined, item: T, callback: async.AsyncResultCallback<K, E>) => {
+            try {
+              const result: K = await parameterFunction(_memo, await Promise.resolve(item));
+              // eslint-disable-next-line callback-return
+              callback(undefined, result);
+            }
+            catch (e) {
+              // eslint-disable-next-line callback-return
+              callback(e);
+            }
+          }),
+          async (err, res) => {
+            if (err)
+              reject(err);
+
+            else
+              resolve(Array.isArray(res) ? await Promise.all(res) : res);
+          },
+        );
+      });
+    }
+  };
+}
+
