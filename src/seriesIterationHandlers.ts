@@ -10,7 +10,7 @@ export const map = new IterableMethods.mapSeries();
 export const reduce = new IterableMethods.reduce();
 // export const reduceRight = new IterableMethods.reduceRight();
 
-export const reject = new IterableMethods.rejectSeries();
+// export const reject = new IterableMethods.rejectSeries();
 export const some = new IterableMethods.someSeries();
 
-export const transform = new IterableMethods.transform();
+// export const transform = new IterableMethods.transform();

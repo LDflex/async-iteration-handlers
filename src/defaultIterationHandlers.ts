@@ -17,6 +17,10 @@ export const forEach = new IterableMethods.forEach();
 export const forEachLimit = new IterableMethods.forEachLimit();
 export const forEachSeries = new IterableMethods.forEachSeries();
 
+export const forEachOf = new IterableMethods.forEachOf();
+export const forEachOfLimit = new IterableMethods.forEachOfLimit();
+export const forEachOfSeries = new IterableMethods.forEachOfSeries();
+
 export const map = new IterableMethods.map();
 export const mapLimit = new IterableMethods.mapLimit();
 export const mapSeries = new IterableMethods.mapSeries();
@@ -27,12 +31,12 @@ export const reduce = new IterableMethods.reduce();
 
 // export const reduceRight = new IterableMethods.reduceRight();
 
-export const reject = new IterableMethods.reject();
-export const rejectLimit = new IterableMethods.rejectLimit();
-export const rejectSeries = new IterableMethods.rejectSeries();
+// export const reject = new IterableMethods.reject();
+// export const rejectLimit = new IterableMethods.rejectLimit();
+// export const rejectSeries = new IterableMethods.rejectSeries();
 
 export const some = new IterableMethods.some();
 export const someLimit = new IterableMethods.someLimit();
 export const someSeries = new IterableMethods.someSeries();
 
-export const transform = new IterableMethods.transform();
+// export const transform = new IterableMethods.transform();

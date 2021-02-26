@@ -62,7 +62,9 @@ export function iterableEachOfMethodsFactory<T, E = Error>(
           path,
           (async (item, key, callback: async.AsyncResultCallback<T, E>) => {
             try {
-              await parameterFunction(await Promise.resolve(item), key);
+              const result = await parameterFunction(await Promise.resolve(item), key);
+              // eslint-disable-next-line callback-return
+              callback(null, result);
             }
             catch (e) {
               // eslint-disable-next-line callback-return
@@ -74,7 +76,7 @@ export function iterableEachOfMethodsFactory<T, E = Error>(
               reject(err);
 
             else
-              resolve(Array.isArray(res) ? await Promise.all(res) : res);
+              resolve(res);
           },
         );
       });
@@ -97,13 +99,16 @@ export function iterableEachOfLimitMethodsFactory<T, E = Error>(
   ) => void) {
   return class {
     handle(pathData: any, path: any) {
-      return (parameterFunction: Function, limit: number) => new Promise((resolve, reject) => {
+      return (parameterFunction: Function, limit: number = 5) => new Promise((resolve, reject) => {
         asyncFunction(
           path,
           limit,
           (async (item, key, callback: async.AsyncResultCallback<T, E>) => {
             try {
-              await parameterFunction(await Promise.resolve(item), key);
+              const resolvedItem = await item;
+              const result = await parameterFunction(resolvedItem, key);
+              // eslint-disable-next-line callback-return
+              callback(null, result);
             }
             catch (e) {
               // eslint-disable-next-line callback-return
@@ -115,7 +120,7 @@ export function iterableEachOfLimitMethodsFactory<T, E = Error>(
               reject(err);
 
             else
-              resolve(Array.isArray(res) ? await Promise.all(res) : res);
+              resolve(res);
           },
         );
       });
@@ -143,8 +148,16 @@ export function iterableLimitMethodsFactory<T, K, E = Error>(
           path,
           limit,
           (async (item, callback: async.AsyncResultCallback<T, E>) => {
-            const result = await parameterFunction(await Promise.resolve(item));
-            callback(undefined, result);
+            try {
+              const resolvedItem = await item;
+              const result = await parameterFunction(resolvedItem);
+              // eslint-disable-next-line callback-return
+              callback(undefined, result);
+            }
+            catch (e) {
+              // eslint-disable-next-line callback-return
+              callback(e);
+            }
           }),
           async (err, res) => {
             if (err)
@@ -180,8 +193,15 @@ export function iterableMemoMethodsFactory<T, K, E = Error>(
           path,
           memo,
           (async (_memo: K | undefined, item: T, callback: async.AsyncResultCallback<K, E>) => {
-            const result: K = await parameterFunction(_memo, await Promise.resolve(item));
-            callback(undefined, result);
+            try {
+              const result: K = await parameterFunction(_memo, await Promise.resolve(item));
+              // eslint-disable-next-line callback-return
+              callback(undefined, result);
+            }
+            catch (e) {
+              // eslint-disable-next-line callback-return
+              callback(e);
+            }
           }),
           async (err, res) => {
             if (err)

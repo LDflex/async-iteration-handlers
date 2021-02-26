@@ -79,11 +79,12 @@ describe('.filter handlers', () => {
           expect(found).toEqual([]);
         });
 
-        // it('Should throw error on rejecting elements', () => {
-        //   expect(() => handler.handle(null, [
-        //     Promise.reject(Error('Reject: FOO')),
-        //   ])).toThrow();
-        // });
+        it('Should throw error on rejecting elements', () => {
+          const filter = handler.handle(null, [
+            Promise.reject(Error('Reject: FOO')),
+          ]);
+          expect(() => filter(() => true)).rejects.toThrowError(Error('Reject: FOO'));
+        });
       });
     }
   }

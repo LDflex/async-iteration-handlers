@@ -2,7 +2,7 @@
 import * as IterableMethods from '../../src/defaultIterationHandlers';
 import { asyncIteratorOf, getEmptyClass } from '../util';
 
-describe('.map handlers', () => {
+describe('.forEach handlers', () => {
   let handler: { handle: Function };
   let handle: Function;
   const filledArrays: (() => (number[] | AsyncGenerator<number, void, unknown>))[] =
@@ -37,6 +37,7 @@ describe('.map handlers', () => {
             await each((x: number) => { val += x; }) :
             await each((x: number) => { val += x; }, arg);
           expect(val).toEqual(6);
+          expect(found).toBe(undefined);
         });
 
         test.each(mixedArrays)('concatenating string elements', async mixedArray => {
@@ -46,6 +47,7 @@ describe('.map handlers', () => {
             await map((x: string) => { str += x; }) :
             await map((x: string) => { str += x; }, arg);
           expect(str).toEqual('abc');
+          expect(found).toBe(undefined);
         });
 
         test.each(getEmptyClass())('returns falsy results on empty iterators', async emtpyPath => {
@@ -56,6 +58,14 @@ describe('.map handlers', () => {
             await each(() => { called = true; }) :
             await each(() => { called = true; }, arg);
           expect(called).toEqual(false);
+          expect(found).toBe(undefined);
+        });
+
+        it('Should throw error on rejecting elements', () => {
+          const each = handler.handle(null, [
+            Promise.reject(Error('Reject: FOO')),
+          ]);
+          expect(() => each(() => true)).rejects.toThrowError(Error('Reject: FOO'));
         });
       });
     }
