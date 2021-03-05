@@ -357,4 +357,4 @@ By default, methods with limited asynchronicity process at most 5 entities concu
 [Jesse Wright](https://github.com/jeswr/),
 [Ruben Verborgh](https://ruben.verborgh.org/),
 [Ruben Taelman](https://www.rubensworks.net/).
-[MIT License](https://github.com/LDflex/LDflex/blob/master/LICENSE.md).
+[MIT License](https://github.com/LDflex/async-iteration-handlers/blob/master/LICENSE.md).
