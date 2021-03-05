@@ -3,8 +3,7 @@
 This library acts as a wrapper for functions from the [async](https://caolan.github.io/async/v3/) library, exporting them as handlers to be used by [LDflex](https://github.com/LDflex/LDflex).
 
 [![npm version](https://img.shields.io/npm/v/@ldflex/async-iteration-handlers.svg)](https://www.npmjs.com/package/@ldflex/async-iteration-handlers)
-[![Build Status](https://travis-ci.com/LDflex/async-iteration-handlers.svg?branch=master)](https://travis-ci.com/LDflex/async-iteration-handlers)
-[![Coverage Status](https://coveralls.io/repos/github/LDflex/async-iteration-handlers/badge.svg?branch=master)](https://coveralls.io/github/LDflex/async-iteration-handlers?branch=master)
+[![build](https://img.shields.io/github/workflow/status/@ldflex/async-iteration-handlers/Node.js%20CI)](https://github.com/@ldflex/async-iteration-handlers/tree/master/)
 [![Dependency Status](https://david-dm.org/LDflex/async-iteration-handlers.svg)](https://david-dm.org/LDflex/async-iteration-handlers)
 
 ### All exported handlers (`defaultIterationHandlers`)
