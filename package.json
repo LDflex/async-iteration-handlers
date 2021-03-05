@@ -35,9 +35,7 @@
     "typescript-eslint": "^0.0.1-alpha.0"
   },
   "scripts": {
-    "build": "npm run build:lib && npm run build:module",
-    "build:lib": "babel src --out-dir lib",
-    "build:module": "babel src --env-name module --out-dir module",
+    "build": "tsc",
     "jest": "jest",
     "lint": "eslint src test --ext .ts",
     "lint:fix": "eslint src test --ext .ts --fix",
