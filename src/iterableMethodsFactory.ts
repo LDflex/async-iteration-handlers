@@ -1,7 +1,5 @@
 import * as async from 'async';
 
-// TODO: FIX JSDOC
-
 /**
  * A factory that turns functions (both fully concurrent and fully in series)
  * from the async library into methods/handlers
@@ -45,8 +43,8 @@ export function iterableMethodsFactory<T, E = Error>(
 
 /**
  * A factory that turns functions (both fully concurrent and fully in series)
- * from the async library into methods/handlers
- * for LDflex
+ * from the async library into methods/handlers for LDflex
+ * Use specifically for EachOf methods
  * @param asyncFunction The function to turn into a method/handler for LDflex
  */
 export function iterableEachOfMethodsFactory<T, E = Error>(
@@ -85,9 +83,10 @@ export function iterableEachOfMethodsFactory<T, E = Error>(
 }
 
 /**
- * A factory that turns functions (both fully concurrent and fully in series)
+ * A factory that turns functions with a limited concurrency
  * from the async library into methods/handlers
  * for LDflex
+ * Use specifically for EachOf methods
  * @param asyncFunction The function to turn into a method/handler for LDflex
  */
 export function iterableEachOfLimitMethodsFactory<T, E = Error>(
@@ -174,9 +173,10 @@ export function iterableLimitMethodsFactory<T, K, E = Error>(
 
 
 /**
- * A factory that turns functions with a limited concurrency
+ * A factory that turns functions (both fully concurrent and fully in series)
  * from the async library into methods/handlers
  * for LDflex
+ * Used specifically for methods with memo's i.e. reducers
  * @param asyncFunction The function to turn into a method/handler for LDflex
  */
 export function iterableMemoMethodsFactory<T, K, E = Error>(
@@ -215,4 +215,3 @@ export function iterableMemoMethodsFactory<T, K, E = Error>(
     }
   };
 }
-
