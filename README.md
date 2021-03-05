@@ -2,6 +2,10 @@
 
 This library acts as a wrapper for functions from the [async](https://caolan.github.io/async/v3/) library, exporting them as handlers to be used by [LDflex](https://github.com/LDflex/LDflex).
 
+[![npm version](https://img.shields.io/npm/v/@ldflex/async-iteration-handlers.svg)](https://www.npmjs.com/package/@ldflex/async-iteration-handlers)
+[![Build Status](https://travis-ci.com/LDflex/async-iteration-handlers.svg?branch=main)](https://travis-ci.com/LDflex/async-iteration-handlers)
+[![Coverage Status](https://coveralls.io/repos/github/LDflex/async-iteration-handlers/badge.svg?branch=main)](https://coveralls.io/github/LDflex/async-iteration-handlers?branch=main)
+[![Dependency Status](https://david-dm.org/LDflex/async-iteration-handlers.svg)](https://david-dm.org/LDflex/async-iteration-handlers)
 
 ### All exported handlers (`defaultIterationHandlers`)
 
@@ -41,18 +45,18 @@ const path = new PathFactory({
 
 ```ts
 // This executes asynchronously
-const allFriendsLabelled: boolean = path.friends.every(
-  friend => `${friend.label}` !== 'undefined'
+const allFriendsLabelled: Promise<boolean> = path.friends.every(
+  async friend => `${await friend.label}` !== 'undefined'
 );
 
 // This executes synchronously
-const allFriendsLabelled: boolean = path.friends.everySeries(
-  friend => `${friend.label}` !== 'undefined'
+const allFriendsLabelled: Promise<boolean> = path.friends.everySeries(
+  async friend => `${await friend.label}` !== 'undefined'
 );
 
 // This executes asynchronously, but at most 5 entities are processed in parrallel at any time
-const allFriendsLabelled: boolean = path.friends.everyLimit(
-  friend => `${friend.label}` !== 'undefined',
+const allFriendsLabelled: Promise<boolean> = path.friends.everyLimit(
+  async friend => `${await friend.label}` !== 'undefined',
   5
 );
 ```
@@ -63,18 +67,18 @@ const allFriendsLabelled: boolean = path.friends.everyLimit(
 
 ```ts
 // This executes asynchronously
-const labelledFriends = path.friends.filter(
-  friend => `${friend.label}` !== 'undefined'
+const labelledFriends: Promise<string[]> = path.friends.filter(
+  async friend => `${await friend.label}` !== 'undefined'
 );
 
 // This executes synchronously
-const labelledFriends = path.friends.filterSeries(
-  friend => `${friend.label}` !== 'undefined'
+const labelledFriends: Promise<string[]> = path.friends.filterSeries(
+  async friend => `${await friend.label}` !== 'undefined'
 );
 
 // This executes asynchronously, but at most 5 entities are processed in parrallel at any time
-const labelledFriends = path.friends.filterLimit(
-  friend => `${friend.label}` !== 'undefined',
+const labelledFriends: Promise<string[]> = path.friends.filterLimit(
+  async friend => `${await friend.label}` !== 'undefined',
   5
 );
 ```
@@ -85,18 +89,18 @@ const labelledFriends = path.friends.filterLimit(
 
 ```ts
 // This executes asynchronously
-const labelledFriend = path.friends.find(
-  friend => `${friend.label}` !== 'undefined'
+const labelledFriend: Promise<string> = path.friends.find(
+  async friend => `${await friend.label}` !== 'undefined'
 );
 
 // This executes synchronously
-const labelledFriend = path.friends.findSeries(
-  friend => `${friend.label}` !== 'undefined'
+const labelledFriend: Promise<string> = path.friends.findSeries(
+  async friend => `${await friend.label}` !== 'undefined'
 );
 
 // This executes asynchronously, but at most 5 entities are processed in parrallel at any time
-const labelledFriend = path.friends.findLimit(
-  friend => `${friend.label}` !== 'undefined',
+const labelledFriend: Promise<string> = path.friends.findLimit(
+  async friend => `${await friend.label}` !== 'undefined',
   5
 );
 ```
@@ -110,8 +114,8 @@ const labelledFriend = [];
 
 // This executes asynchronously
 path.friends.forEach(
-  friend => {
-    if (`${friend.label}` !== 'undefined') {
+  async friend => {
+    if (`${await friend.label}` !== 'undefined') {
       labelledFriend.push(friend)
     }
   }
@@ -119,8 +123,8 @@ path.friends.forEach(
 
 // This executes synchronously
 path.friends.forEachSeries(
-  friend => {
-    if (`${friend.label}` !== 'undefined') {
+  async friend => {
+    if (`${await friend.label}` !== 'undefined') {
       labelledFriend.push(friend)
     }
   }
@@ -128,8 +132,8 @@ path.friends.forEachSeries(
 
 // This executes asynchronously, but at most 5 entities are processed in parrallel at any time
 path.friends.forEachLimit(
-  friend => {
-    if (`${friend.label}` !== 'undefined') {
+  async friend => {
+    if (`${await friend.label}` !== 'undefined') {
       labelledFriend.push(friend)
     }
   },
@@ -141,24 +145,56 @@ path.friends.forEachLimit(
  - `.forEachOfLimit`
  - `.forEachOfSeries`
 
+```ts
+const labelledFriend = [];
+
+// This executes asynchronously
+path.friends.forEachOf(
+  async (friend, index) => {
+    if (`${await friend.label}` !== 'undefined') {
+      labelledFriend.push(friend)
+    }
+  }
+);
+
+// This executes synchronously
+path.friends.forEachOfSeries(
+  async (friend, index) => {
+    if (`${await friend.label}` !== 'undefined') {
+      labelledFriend.push(friend)
+    }
+  }
+);
+
+// This executes asynchronously, but at most 5 entities are processed in parrallel at any time
+path.friends.forEachOfLimit(
+  async (friend, index) => {
+    if (`${await friend.label}` !== 'undefined') {
+      labelledFriend.push(friend)
+    }
+  },
+  5
+);
+```
+
  - `.map`
  - `.mapLimit`
  - `.mapSeries`
 
 ```ts
 // This executes asynchronously
-const friendLabels = path.friends.filter(
-  friend => `${friend.label}`
+const friendLabels: Promise<string[]> = path.friends.map(
+  async friend => `${await friend.label}`
 );
 
 // This executes synchronously
-const friendLabels = path.friends.filterSeries(
-  friend => `${friend.label}`
+const friendLabels: Promise<string[]> = path.friends.mapSeries(
+  async friend => `${await friend.label}`
 );
 
 // This executes asynchronously, but at most 5 entities are processed in parrallel at any time
-const friendLabels = path.friends.filterLimit(
-  friend => `${friend.label}`,
+const friendLabels: Promise<string[]> = path.friends.mapLimit(
+  async friend => `${await friend.label}`,
   5
 );
 ```
@@ -169,23 +205,31 @@ const friendLabels = path.friends.filterLimit(
 
 ```ts
 // This executes asynchronously
-const someFriendsLabelled = path.friends.some(
+const someFriendsLabelled: Promise<boolean> = path.friends.some(
   friend => `${friend.label}` !== 'undefined'
 );
 
 // This executes synchronously
-const someFriendsLabelled = path.friends.someLimit(
+const someFriendsLabelled: Promise<boolean> = path.friends.someLimit(
   friend => `${friend.label}` !== 'undefined'
 );
 
 // This executes asynchronously, but at most 5 entities are processed in parrallel at any time
-const someFriendsLabelled = path.friends.someSeries(
+const someFriendsLabelled: Promise<boolean> = path.friends.someSeries(
   friend => `${friend.label}` !== 'undefined',
   5
 );
 ```
 
  - `.reduce`
+
+```ts
+// This executes synchronously
+const friendLabels: Promise<string>= path.friends.reduce(
+  async (total, friend) => `${total}&${await friend.label}`,
+  ''
+);
+```
 
 ## Alternatively if you wish to only use sychronous handlers (`seriesIterationHandlers`)
 
@@ -219,14 +263,98 @@ const path = new PathFactory({
 
 #### Available Methods
 
+
  - `.every`
+
+```ts
+// This executes synchronously
+const allFriendsLabelled: Promise<boolean> = path.friends.every(
+  async friend => `${await friend.label}` !== 'undefined'
+);
+```
+
  - `.filter`
+
+```ts
+// This executes synchronously
+const labelledFriends: Promise<string[]> = path.friends.filter(
+  async friend => `${await friend.label}` !== 'undefined'
+);
+```
+
  - `.find`
+
+```ts
+// This executes synchronously
+const labelledFriend: Promise<string> = path.friends.find(
+  async friend => `${await friend.label}` !== 'undefined'
+);
+```
+
  - `.forEach`
+
+```ts
+const labelledFriend = [];
+
+// This executes synchronously
+path.friends.forEach(
+  async friend => {
+    if (`${await friend.label}` !== 'undefined') {
+      labelledFriend.push(friend)
+    }
+  }
+);
+```
+
  - `.forEachOf`
+
+```ts
+const labelledFriend = [];
+
+// This executes synchronously
+path.friends.forEachOf(
+  async (friend, index) => {
+    if (`${await friend.label}` !== 'undefined') {
+      labelledFriend.push(friend)
+    }
+  }
+);
+```
+
  - `.map`
+
+```ts
+// This executes synchronously
+const friendLabels: Promise<string[]> = path.friends.map(
+  async friend => `${await friend.label}`
+);
+```
+
  - `.some`
+
+```ts
+// This executes synchronously
+const someFriendsLabelled: Promise<boolean> = path.friends.some(
+  friend => `${friend.label}` !== 'undefined'
+);
+```
+
  - `.reduce`
+
+```ts
+// This executes synchronously
+const friendLabels: Promise<string>= path.friends.reduce(
+  async (total, friend) => `${total}&${await friend.label}`,
+  ''
+);
+```
 
 ## NOTE
 By default, methods with limited asynchronicity process at most 5 entities concurrently.
+
+## License
+©2020–present
+[Jesse Wright](https://github.com/jeswr/),
+[Ruben Verborgh](https://ruben.verborgh.org/),
+[Ruben Taelman](https://www.rubensworks.net/).
+[MIT License](https://github.com/LDflex/LDflex/blob/master/LICENSE.md).
