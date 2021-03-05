@@ -23,7 +23,6 @@
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
-    "babel": "^6.23.0",
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.1",
     "husky": "^4.2.3",
@@ -36,9 +35,7 @@
     "typescript-eslint": "^0.0.1-alpha.0"
   },
   "scripts": {
-    "build": "npm run build:lib && npm run build:module",
-    "build:lib": "babel src --out-dir lib",
-    "build:module": "babel src --env-name module --out-dir module",
+    "build": "tsc",
     "jest": "jest",
     "lint": "eslint src test --ext .ts",
     "lint:fix": "eslint src test --ext .ts --fix",
