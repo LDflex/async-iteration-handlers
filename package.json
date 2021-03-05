@@ -10,13 +10,19 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/LDflex/LDflex"
+    "url": "https://github.com/LDflex/async-iteration-handlers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LDflex/async-iteration-handlers/issues"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.js",
   "sideEffects": false,
+  "directories": {
+    "src": "src"
+  },
   "files": [
-    "src"
+    "lib"
   ],
   "devDependencies": {
     "@types/async": "^3.2.5",
