@@ -24,7 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
     "eslint": "^7.21.0",
-    "eslint-plugin-jest": "^23.8.1",
+    "eslint-plugin-jest": "^24.1.5",
     "husky": "^4.2.3",
     "jest": "^26.6.3",
     "ldflex": "^2.12.0",
