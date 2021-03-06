@@ -68,5 +68,10 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "build",
+    "test"
+  ]
 }
