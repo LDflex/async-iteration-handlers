@@ -5,6 +5,7 @@ export const every = new IterableMethods.everySeries();
 export const filter = new IterableMethods.filterSeries();
 export const find = new IterableMethods.findSeries();
 export const forEach = new IterableMethods.forEachSeries();
+export const forEachOf = new IterableMethods.forEachOfSeries();
 export const map = new IterableMethods.mapSeries();
 
 export const reduce = new IterableMethods.reduce();
