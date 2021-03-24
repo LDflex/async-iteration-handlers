@@ -12,7 +12,7 @@ This library acts as a wrapper for functions from the [async](https://caolan.git
 ```ts
 const { PathFactory } = require('ldflex');
 const { default: ComunicaEngine, defaultHandlers } = require('@ldflex/comunica');
-const { defaultIterationHandlers } = require('@ldflex/async-iteration-handlers');
+const defaultIterationHandlers = require('@ldflex/async-iteration-handlers');
 const { namedNode } = require('@rdfjs/data-model');
 
 // The JSON-LD context for resolving properties
