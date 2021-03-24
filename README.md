@@ -10,8 +10,8 @@ This library acts as a wrapper for functions from the [async](https://caolan.git
 
 #### Initialization
 ```ts
-const { PathFactory } = require('ldflex');
-const { default: ComunicaEngine, defaultHandlers } = require('@ldflex/comunica');
+const { PathFactory, defaultHandlers } = require('ldflex');
+const { default: ComunicaEngine } = require('@ldflex/comunica');
 const defaultIterationHandlers = require('@ldflex/async-iteration-handlers');
 const { namedNode } = require('@rdfjs/data-model');
 
@@ -29,10 +29,16 @@ const queryEngine = new ComunicaEngine('https://ruben.verborgh.org/profile/');
 const path = new PathFactory({
   context,
   queryEngine,
-  handlers: [
+  handlers: {
     ...defaultHandlers,
     ...defaultIterationHandlers
-  ]
+  }
+});
+
+const ruben = path.create({ subject: namedNode('https://ruben.verborgh.org/profile/#me') });
+
+ruben.friends.forEach(async (x: any) => {
+  console.log(`${await x}`)
 });
 ```
 
