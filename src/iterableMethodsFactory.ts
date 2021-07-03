@@ -1,40 +1,47 @@
 import * as async from 'async';
 
+type AsyncFunction<T, E> = (
+  arr: async.IterableCollection<T>,
+  iterator: async.AsyncIterator<T, E>,
+  callback: async.AsyncResultCallback<T, E>
+) => void
+
+function callbackFactory<T, E>(parameterFunction: Function) {
+  return async (item: T, callback: async.AsyncResultCallback<T, E>) => {
+    try {
+      return callback(null, parameterFunction(await item));
+    }
+    catch (e) {
+      return callback(e);
+    }
+  };
+}
+
+function callbackFactoryKey<T, E, A, K>(parameterFunction: Function) {
+  return async (p1: A, p2: K, callback: async.AsyncResultCallback<T, E>) => {
+    try {
+      return callback(null, parameterFunction(await p1, await p2));
+    }
+    catch (e) {
+      return callback(e);
+    }
+  };
+}
+
 /**
  * A factory that turns functions (both fully concurrent and fully in series)
  * from the async library into methods/handlers
  * for LDflex
  * @param asyncFunction The function to turn into a method/handler for LDflex
  */
-export function iterableMethodsFactory<T, E = Error>(
-  asyncFunction: (
-    arr: async.IterableCollection<T>,
-    iterator: async.AsyncIterator<T, E>,
-    callback: async.AsyncResultCallback<T, E>
-  ) => void) {
+export function iterableMethodsFactory<T, E = Error>(asyncFunction: AsyncFunction<T, E>) {
   return class {
-    handle(pathData: any, path: any) {
+    handle(_: any, path: any) {
       return (parameterFunction: Function) => new Promise((resolve, reject) => {
         asyncFunction(
           path,
-          (async (item, callback: async.AsyncResultCallback<T, E>) => {
-            try {
-              const result = await parameterFunction(await Promise.resolve(item));
-              // eslint-disable-next-line callback-return
-              callback(null, result);
-            }
-            catch (e) {
-              // eslint-disable-next-line callback-return
-              callback(e);
-            }
-          }),
-          async (err, res) => {
-            if (err)
-              reject(err);
-
-            else
-              resolve(Array.isArray(res) ? await Promise.all(res) : res);
-          },
+          callbackFactory(parameterFunction),
+          async (e, res) => e ? reject(e) : resolve(Array.isArray(res) ? await Promise.all(res) : res),
         );
       });
     }
@@ -58,24 +65,8 @@ export function iterableEachOfMethodsFactory<T, E = Error>(
       return (parameterFunction: Function) => new Promise((resolve, reject) => {
         asyncFunction(
           path,
-          (async (item, key, callback: async.AsyncResultCallback<T, E>) => {
-            try {
-              const result = await parameterFunction(await Promise.resolve(item), key);
-              // eslint-disable-next-line callback-return
-              callback(null, result);
-            }
-            catch (e) {
-              // eslint-disable-next-line callback-return
-              callback(e);
-            }
-          }),
-          async (err, res) => {
-            if (err)
-              reject(err);
-
-            else
-              resolve(res);
-          },
+          callbackFactoryKey(parameterFunction),
+          async (e, res) => e ? reject(e) : resolve(res),
         );
       });
     }
@@ -97,30 +88,13 @@ export function iterableEachOfLimitMethodsFactory<T, E = Error>(
     callback: async.AsyncResultCallback<T, E>
   ) => void) {
   return class {
-    handle(pathData: any, path: any) {
+    handle(_: any, path: any) {
       return (parameterFunction: Function, limit: number = 5) => new Promise((resolve, reject) => {
         asyncFunction(
           path,
           limit,
-          (async (item, key, callback: async.AsyncResultCallback<T, E>) => {
-            try {
-              const resolvedItem = await item;
-              const result = await parameterFunction(resolvedItem, key);
-              // eslint-disable-next-line callback-return
-              callback(null, result);
-            }
-            catch (e) {
-              // eslint-disable-next-line callback-return
-              callback(e);
-            }
-          }),
-          async (err, res) => {
-            if (err)
-              reject(err);
-
-            else
-              resolve(res);
-          },
+          callbackFactoryKey(parameterFunction),
+          async (e, res) => e ? reject(e) : resolve(res),
         );
       });
     }
@@ -146,25 +120,8 @@ export function iterableLimitMethodsFactory<T, K, E = Error>(
         asyncFunction(
           path,
           limit,
-          (async (item, callback: async.AsyncResultCallback<T, E>) => {
-            try {
-              const resolvedItem = await item;
-              const result = await parameterFunction(resolvedItem);
-              // eslint-disable-next-line callback-return
-              callback(undefined, result);
-            }
-            catch (e) {
-              // eslint-disable-next-line callback-return
-              callback(e);
-            }
-          }),
-          async (err, res) => {
-            if (err)
-              reject(err);
-
-            else
-              resolve(Array.isArray(res) ? await Promise.all(res) : res);
-          },
+          callbackFactory(parameterFunction),
+          async (e, res) => e ? reject(e) : resolve(Array.isArray(res) ? await Promise.all(res) : res),
         );
       });
     }
@@ -179,37 +136,36 @@ export function iterableLimitMethodsFactory<T, K, E = Error>(
  * Used specifically for methods with memo's i.e. reducers
  * @param asyncFunction The function to turn into a method/handler for LDflex
  */
-export function iterableMemoMethodsFactory<T, K, E = Error>(
-  asyncFunction: (
-    arr: IterableIterator<T> | T[],
-    memo: K,
-    iterator: async.AsyncMemoIterator<T, K, E>,
-    callback: async.AsyncResultCallback<T, E>
-  ) => void) {
+// export function iterableMemoMethodsFactory<T, K, E = Error>(
+//   asyncFunction: (
+//     arr: IterableIterator<T> | T[],
+//     memo: K,
+//     iterator: async.AsyncMemoIterator<T, K, E>,
+//     callback: async.AsyncResultCallback<T, E>
+//   ) => void) {
+//   return class {
+//     handle(_: any, path: any) {
+//       return (parameterFunction: (memo: K | undefined, item: T) => K, memo: K) => new Promise((resolve, reject) => {
+//         asyncFunction(
+//           path,
+//           memo,
+//           callbackFactoryKey(parameterFunction),
+//           async (e, res) => e ? reject(e) : resolve(Array.isArray(res) ? await Promise.all(res) : res),
+//         );
+//       });
+//     }
+//   };
+// }
+
+export function iterableMemoMethodsFactory<F extends Function, T extends Function, K, A, B>(asyncFunction: F) {
   return class {
-    handle(pathData: any, path: any) {
-      return (parameterFunction: (memo: K | undefined, item: T) => K, memo: K) => new Promise((resolve, reject) => {
+    handle(_: any, path: any) {
+      return (parameterFunction: T, p: K) => new Promise((resolve, reject) => {
         asyncFunction(
           path,
-          memo,
-          (async (_memo: K | undefined, item: T, callback: async.AsyncResultCallback<K, E>) => {
-            try {
-              const result: K = await parameterFunction(_memo, await Promise.resolve(item));
-              // eslint-disable-next-line callback-return
-              callback(undefined, result);
-            }
-            catch (e) {
-              // eslint-disable-next-line callback-return
-              callback(e);
-            }
-          }),
-          async (err, res) => {
-            if (err)
-              reject(err);
-
-            else
-              resolve(Array.isArray(res) ? await Promise.all(res) : res);
-          },
+          p,
+          callbackFactoryKey(parameterFunction),
+          async (e: A, res: B) => e ? reject(e) : resolve(Array.isArray(res) ? await Promise.all(res) : res),
         );
       });
     }
