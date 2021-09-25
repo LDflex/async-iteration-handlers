@@ -25,7 +25,7 @@ export function iterableMethodsFactory<T, E = Error>(
             }
             catch (e) {
               // eslint-disable-next-line callback-return
-              callback(e);
+              callback(e as E | null | undefined);
             }
           }),
           async (err, res) => {
@@ -66,7 +66,7 @@ export function iterableEachOfMethodsFactory<T, E = Error>(
             }
             catch (e) {
               // eslint-disable-next-line callback-return
-              callback(e);
+              callback(e as E | null | undefined);
             }
           }),
           async (err, res) => {
@@ -111,7 +111,7 @@ export function iterableEachOfLimitMethodsFactory<T, E = Error>(
             }
             catch (e) {
               // eslint-disable-next-line callback-return
-              callback(e);
+              callback(e as E | null | undefined);
             }
           }),
           async (err, res) => {
@@ -155,7 +155,7 @@ export function iterableLimitMethodsFactory<T, K, E = Error>(
             }
             catch (e) {
               // eslint-disable-next-line callback-return
-              callback(e);
+              callback(e as E | null | undefined);
             }
           }),
           async (err, res) => {
@@ -200,7 +200,7 @@ export function iterableMemoMethodsFactory<T, K, E = Error>(
             }
             catch (e) {
               // eslint-disable-next-line callback-return
-              callback(e);
+              callback(e as E | null | undefined);
             }
           }),
           async (err, res) => {
