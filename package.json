@@ -30,7 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^8.0.0",
-    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-jest": "^25.0.5",
     "jest": "^27.1.0",
     "ldflex": "^2.12.1",
     "pre-commit": "^1.2.2",
