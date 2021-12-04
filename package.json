@@ -25,17 +25,17 @@
     "lib"
   ],
   "devDependencies": {
-    "@types/async": "^3.2.7",
-    "@types/jest": "^27.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^8.0.0",
-    "eslint-plugin-jest": "^25.0.5",
-    "jest": "^27.1.0",
+    "@types/async": "^3.2.10",
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint": "^8.4.0",
+    "eslint-plugin-jest": "^25.3.0",
+    "jest": "^27.4.3",
     "ldflex": "^2.12.1",
     "pre-commit": "^1.2.2",
-    "semantic-release": "^18.0.0",
-    "ts-jest": "^27.0.5",
+    "semantic-release": "^18.0.1",
+    "ts-jest": "^27.0.7",
     "typescript": "4.5",
     "typescript-eslint": "^0.0.1-alpha.0"
   },
@@ -49,7 +49,7 @@
     "test:dev": "npm run jest -- --watch"
   },
   "dependencies": {
-    "async": "^3.2.0"
+    "async": "^3.2.2"
   },
   "release": {
     "branches": [
