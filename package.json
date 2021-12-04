@@ -45,7 +45,7 @@
     "lint": "eslint src test --ext .ts",
     "lint:fix": "eslint src test --ext .ts --fix",
     "prepublishOnly": "npm run build",
-    "test": "npm run lint && npm run jest -- --collectCoverage",
+    "test": "npm run jest -- --collectCoverage",
     "test:dev": "npm run jest -- --watch"
   },
   "dependencies": {
